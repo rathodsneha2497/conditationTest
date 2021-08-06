@@ -1,0 +1,75 @@
+int size=8;
+		int col=600/size;
+		int row=600/size;
+		int[][] board=new int[col][row];
+		{
+			for(int i=0;i<row;i++)
+			{
+				for(int j=0;j<col;j++)
+				{
+					board[i][j]=(int)(Math.random(2));
+				}
+			}
+		}
+		
+	void setup() {
+		size(600,600);
+		frameRate(24);
+	} 
+	
+	void draw() {
+		background(0);
+		
+	int[][] nextboard=new int[col][row];
+	
+		for(int i=1;i<row-1;i++)
+		{
+			for(int j=1;j<col-1;j++)
+			{
+				int neighbours=countNeighbours(x,y);
+				nextboard[i][j]=ruleOfLife(board[i][j],neighbours);
+				
+			}
+		}
+		
+		board=nextboard;
+		drawboard();
+	}
+	
+		int countNeighbours(int x,int y) {
+			int neighbours=0;
+			for(int i=-1;i<=1;i++) {
+				for(int j=-1;j<=1;j++) {
+					int neighbours+=board[x+j][y+i];
+				}
+			}
+			neighbours-=board[x][y];
+			return(neighbours);
+		}
+	
+int ruleOfLife(int status,int neighbours) {
+	if(status==1 && neighbours>3) 
+		return(0);
+	else if(status==1 && neighbours<2)
+		return(0);
+	else if(status==0 && neighbours==3)
+		return(1);
+	else return(status);
+}
+
+void drawboard(){
+	for(int i=0;i<row;i++)
+	{
+		for(int j=0;j<col;j++)
+		{
+			if(board[i[j]==1]) {
+				fill(192);
+		}
+			else {
+				fill(64);
+			}
+			rect(i*size,y*size,size);
+			
+			}
+				
+	}
